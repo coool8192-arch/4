@@ -8,16 +8,19 @@ class List
 	struct Node
 	{
 		T data;
+		Node* previous;
 		Node* next;
 	};
 	int size;
 	Node* head;
+	Node* tail;
 
 public:
 	List()
 	{
 		size = 0;
 		head = nullptr;
+		tail = nullptr;
 	}
 
 	void push_front(T data)
@@ -25,15 +28,18 @@ public:
 		Node* newNode = new Node;
 
 		newNode->data = data;
-		
+		newNode->previous = nullptr;
+
 		if (head == nullptr)
 		{
-			head = newNode;
+			head = tail = newNode;
 			newNode->next = nullptr;
+			
 		}
 		else
 		{
 			newNode->next = head;
+			head->previous = newNode;
 			head = newNode;
 		}
 		size++;
@@ -44,15 +50,22 @@ public:
 		if (head == nullptr)
 		{
 			cout << "List No Data" << endl;
-			return;
 		}
+		else
+		{
+			Node* deleteNode = head;
 
-		Node* deleteNode = head;
-
-		head = deleteNode->next;
-
-		delete deleteNode;
-
+			if (head == tail)
+			{
+				head = tail = nullptr;
+			}
+			else
+			{
+			head = deleteNode->next;
+			deleteNode->next->previous = nullptr;
+			delete deleteNode;
+			}
+		}
 		size--;
 	}
 
@@ -61,23 +74,18 @@ public:
 		Node* newNode = new Node;
 
 		newNode->data = data;
-
 		newNode->next = nullptr;
 
-		if (head == nullptr)
+		if (tail == nullptr)
 		{
-			head = newNode;
-			newNode->next = nullptr;
+			head = tail = newNode;
+			newNode->previous = nullptr;
 		}
 		else
 		{
-			Node* currentNode = head;
-
-			while (currentNode->next != nullptr)
-			{
-				currentNode = currentNode->next;
-			}
-			currentNode->next = newNode;
+			newNode->previous = tail;
+			tail->next = newNode;
+			tail = newNode;
 		}
 		size++;
 	}
@@ -87,55 +95,29 @@ public:
 		return (head == nullptr);
 	}
 
-	void pop_back()
-	{
-		if (head == nullptr)
-		{
-			cout << "List No Data" << endl;
-			return;
-		}
-		else
-		{
-			Node* deleteNode = head;
-			Node* previousNode = nullptr;
-			if (size == 1)
-			{
-				head = deleteNode->next;
-			}
-			else
-			{
-				while (deleteNode->next != nullptr)
-				{
-					previousNode = deleteNode;
-					deleteNode = deleteNode->next;
-				}
-				previousNode->next = deleteNode->next;
-			}
-			delete deleteNode;
-		}
-	}
-
 	~List()
 	{
 		while (head != nullptr)
 		{
 			pop_front();
 		}
+
 	}
 };
-
-
 int main()
 {
 	List<int> list;
 
-	list.push_front(10);
+	list.push_front(7);
 	list.push_front(13);
 	list.push_back(16);
+
 	list.pop_front();
 	list.pop_front();
-	list.pop_back();
+	list.pop_front();
+
 	cout << list.empty() << endl;
+
 	return 0;
 }
 
