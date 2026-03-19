@@ -2,71 +2,22 @@
 
 using namespace std;
 
-template<typename T>
+template <typename T>
 class List
 {
 	struct Node
 	{
 		T data;
-		Node* previous;
 		Node* next;
 	};
 	int size;
 	Node* head;
-	Node* tail;
 
 public:
 	List()
 	{
 		size = 0;
 		head = nullptr;
-		tail = nullptr;
-	}
-
-	void push_front(T data)
-	{
-		Node* newNode = new Node;
-
-		newNode->data = data;
-		newNode->previous = nullptr;
-
-		if (head == nullptr)
-		{
-			head = tail = newNode;
-			newNode->next = nullptr;
-			
-		}
-		else
-		{
-			newNode->next = head;
-			head->previous = newNode;
-			head = newNode;
-		}
-		size++;
-	}
-
-	void pop_front()
-	{
-		if (head == nullptr)
-		{
-			cout << "List No Data" << endl;
-		}
-		else
-		{
-			Node* deleteNode = head;
-
-			if (head == tail)
-			{
-				head = tail = nullptr;
-			}
-			else
-			{
-			head = deleteNode->next;
-			deleteNode->next->previous = nullptr;
-			delete deleteNode;
-			}
-		}
-		size--;
 	}
 
 	void push_back(T data)
@@ -74,49 +25,63 @@ public:
 		Node* newNode = new Node;
 
 		newNode->data = data;
-		newNode->next = nullptr;
 
-		if (tail == nullptr)
+		if (head == nullptr)
 		{
-			head = tail = newNode;
-			newNode->previous = nullptr;
+			head = newNode;
+
+			newNode->next = head;
 		}
 		else
 		{
-			newNode->previous = tail;
-			tail->next = newNode;
-			tail = newNode;
+			newNode->next = head->next;
+			
+			head->next = newNode;
+
+			head = newNode;
 		}
 		size++;
 	}
 
-	const bool& empty()
+	void pop_back()
 	{
-		return (head == nullptr);
-	}
-
-	~List()
-	{
-		while (head != nullptr)
+		if (head == nullptr)
 		{
-			pop_front();
+			cout << "List No Data" << endl;
 		}
+		else
+		{
+			if (head->next = head)
+			{
+				head = nullptr;
+			}
+			else
+			{
+				Node* currentNode = head;
 
+				while (currentNode->next != head)
+				{
+					currentNode = currentNode->next;
+				}
+
+				currentNode->next = head->next;
+
+				delete head;
+
+				head = currentNode;
+			}
+			size--;
+		}
 	}
 };
+
 int main()
 {
 	List<int> list;
 
-	list.push_front(7);
-	list.push_front(13);
-	list.push_back(16);
-
-	list.pop_front();
-	list.pop_front();
-	list.pop_front();
-
-	cout << list.empty() << endl;
+	list.push_back(15);
+	list.pop_back();
+	list.pop_back();
 
 	return 0;
 }
