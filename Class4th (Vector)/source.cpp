@@ -75,7 +75,7 @@ public:
 
 	~Vector()
 	{
-		delete pointer;
+		delete[] pointer;
 	}
 };
 

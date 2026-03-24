@@ -1,48 +1,51 @@
 ﻿#include <iostream>
+#define size 5
 
 using namespace std;
 
-template<typename T>
-class Stack
+template <typename T>
+class Queue
 {
-	T* data;
-	int capacity;
-	int highset;
+	T container[size];
+	int rear;
+	int front;
 
 public:
-	Stack()
+	Queue()
 	{
-		data = nullptr;
-		capacity = 0;
-		highset = -1;
+		rear = 0;
+		front = 0;
+
+		for (int i = 0; i < size; i++)
+		{
+			container[i] = NULL;
+		}
 	}
 
-	void resize(int newSize)
+	void push(T data)
 	{
-		capacity = newSize;
-
-		T* temporary = new T[capacity];
-
-		for (int i = 0; i < capacity; i++)
+		if (rear >= size)
 		{
-			temporary[i] = NULL;
+			cout << "linear queue overflow" << endl;
 		}
-
-		for (int i = 0; i < highset+1; i++)
+		else
 		{
-			temporary[i] = data[i];
+			container[rear++] = data;
 		}
-
-		delete[] data;
-
-		data = temporary;
-
 	}
+
 };
 
 int main()
 {
-	Stack<int> stack;
+	Queue<int> queue;
+
+	queue.push(10);
+	queue.push(20);
+	queue.push(30);
+	queue.push(40);
+	queue.push(50);
+	queue.push(60);
 
 	return 0;
 }
