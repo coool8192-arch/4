@@ -1,107 +1,44 @@
 ﻿#include <iostream>
 using namespace std;
 
-template <typename T>
-class Priority_Queue
+template<typename KEY, typename VALUE>
+class HashTable
 {
-	T* container;
+	struct Node
+	{
+		KEY key;
+		VALUE value;
+
+		Node* next;
+	};
+
+	struct Bucket
+	{
+
+	};
 	int capacity;
-	int index;
+	int size;
 
 public:
-	Priority_Queue()
+	HashTable()
 	{
+		size = 0;
 		capacity = 0;
-		index = 0;
-		container = nullptr;
+
+
 	}
 
-	void resize(int newSize)
-	{
-		capacity = newSize;
+template<typename T>
+unsigned int hash_fuction(KEY key)
+{
+	return (unsigned int)key % capacity;
+}
 
-		T* temporary = new T[capacity];
-
-		for (int i = 0; i < capacity; i++)
-		{
-			temporary[i] = NULL;
-		}
-
-		for (int i = 0; i < index; i++)
-		{
-			temporary[i] = container[i];
-		}
-
-		delete[] container;
-
-		container = temporary;
-	}
-
-	void push(T data)
-	{
-		if (capacity <= 0)
-		{
-			resize(1);
-		}
-		else if (capacity <= index)
-		{
-			resize(capacity * 2);
-		}
-
-		container[index] = data;
-
-		int child = index - 1;
-		int parent = (child - 1) / 2;
-
-		while (child > 0)
-		{
-			if (container[child] > container[parent])
-			{
-				swap(container[child], container[parent]);
-			}
-			child = parent;
-			parent = (child - 1) / 2;
-		}
-
-		index++;
-	}
-
-	const T& top()
-	{
-		return container[0];
-	}
-
-	const int& size()
-	{
-		return index;
-	}
-
-	const bool& empty()
-	{
-		return index <= 0;
-	}
-
-	~Priority_Queue()
-	{
-		delete[] container;
-	}
 };
 
 int main()
 {
-	Priority_Queue<int> priority_queue;
 
-	priority_queue.push(10);
-	priority_queue.push(20);
-	priority_queue.push(30);
-	priority_queue.push(15);
-	priority_queue.push(5);
-	priority_queue.push(35);
-	priority_queue.push(25);
-
-	cout << priority_queue.top() << endl;
-	cout << priority_queue.size() << endl;
-	cout << priority_queue.empty() << endl;
 return 0;
 }
 
