@@ -3,6 +3,7 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
+  <Project Path="../Class10th (Adjacency Matrix)/Class10th (Adjacency Matrix).vcxproj" Id="62f14e7b-48fd-4f2d-a58b-ddd72613ca38" />
   <Project Path="../Class1st (Single Linked List)/Class1st (Single Linked List).vcxproj" Id="c1bd4e69-2f5b-4100-b905-c00ebcfd6e66" />
   <Project Path="../Class2nd (Double Linked List)/Class2nd (Double Linked List).vcxproj" Id="310b8b1a-a781-43db-acaf-709ed4da532f" />
   <Project Path="../Class3rd (Circle Linked List)/Class3rd (Circle Linked List).vcxproj" Id="48655023-ccbf-4204-a29d-cd48b459f8d6" />
