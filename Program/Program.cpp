@@ -1,143 +1,87 @@
 ﻿#include <iostream>
+
 using namespace std;
 
-template<typename T>
-class Graph
+template <typename T>
+class Set
 {
-	struct Node
-	{
-		T data;
-		Node* next;
+    struct Node
+    {
+        T data;
 
-		Node(T data, Node* link = nullptr)
-		{
-			this->data = data;
+        Node* left = nullptr;
+        Node* right = nullptr;
 
-			next = link;
-		}
-	};
+        Node(T data)
+        {
+            this->data = data;
+        }
+    };
 
-	int size;
-	int count;
-	int capacity;
-	T* vertex;
-	Node** list;
-
+    Node* root;
 public:
-	Graph()
-	{
-		size = 0;
-		count = 0;
-		capacity = 0;
+    Set()
+    {
+        root = nullptr;
+    }
 
-		vertex = nullptr;
-		list = nullptr;
-	}
+    void insert(T data)
+    {
+        if (root == nullptr)
+        {
+            root = new Node(data);
+        }
+        else
+        {
+            Node* currentNode = root;
 
-	void resize(int newSize)
-	{
-		capacity = newSize;
+            while (true)
+            {
+                if (data < currentNode->data)
+                {
+                    if (currentNode->left == nullptr)
+                    {
+                        currentNode->left = new Node(data);
 
-		T* temporary = new T[capacity];
+                        break;
+                    }
+                    else
+                    {
+                        currentNode = currentNode->left;
+                    }
+                }
+                else if (data > currentNode->data)
+                {
+                    if (currentNode->right == nullptr)
+                    {
+                        currentNode->right = new Node(data);
 
-		for (int i = 0; i < capacity; i++)
-		{
-			temporary[i] = NULL;
-		}
+                        break;
+                    }
+                    else
+                    {
+                        currentNode = currentNode->right;
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+    }
 
-		for (int i = 0; i < size; i++)
-		{
-			temporary[i] = vertex[i];
-		}
-
-		delete[] vertex;
-
-		vertex = temporary;
-	}
-
-	void push(T data)
-	{
-		if (capacity <= 0)
-		{
-			resize(1);
-		}
-		else if (size >= capacity)
-		{
-			resize(capacity * 2);
-		}
-
-		vertex[size++] = data;
-	}
-
-	void edge(int i, int j)
-	{
-		if (size <= 0)
-		{
-			cout << "adjacency list is empty" << endl;
-		}
-		else if (i >= size || j >= size)
-		{
-			cout << "index out of range" << endl;
-		}
-		else
-		{
-			if (list == nullptr)
-			{
-				list = new Node * [size];
-
-				for (int i = 0; i < size; i++)
-				{
-					list[i] = nullptr;
-				}
-
-				count = size;
-			}
-			else if (count < size)
-			{
-				resize();
-			}
-
-			list[i] = new Node(vertex[j], list[i]);
-			list[j] = new Node(vertex[i], list[j]);
-		}
-	}
-
-	void resize()
-	{
-		Node** newList = new Node * [size];
-
-		for (int i = 0; i < size; i++)
-		{
-			newList[i] = nullptr;
-		}
-
-		for (int i = 0; i < count; i++)
-		{
-			newList[i] = list[i];
-		}
-
-		delete[] list;
-
-		list = newList;
-
-		count = size;
-	}
-
-	void render()
 };
 
 int main()
 {
-	Graph<char> graph;
+    Set<int> set;
 
-	graph.push('A');
-	graph.push('B');
-	graph.push('C');
-	graph.push('D');
+    set.insert(10);
+    set.insert(15);
+    set.insert(6);
+    set.insert(12);
 
-	graph.edge(1, 2);
-	graph.edge(1, 3);
-
-return 0;
+    return 0;
 }
 
